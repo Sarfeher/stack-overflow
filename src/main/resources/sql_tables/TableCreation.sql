@@ -10,7 +10,8 @@ CREATE TABLE questions (
     question_id BIGSERIAL PRIMARY KEY,
     question TEXT NOT NULL,
     title VARCHAR(480) NOT NULL UNIQUE,
-    user_id INTEGER
+    user_id INTEGER,
+    date TIMESTAMP
 );
 
 CREATE TABLE answers (
