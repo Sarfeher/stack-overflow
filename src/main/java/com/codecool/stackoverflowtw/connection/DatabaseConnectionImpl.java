@@ -8,10 +8,8 @@ import java.sql.SQLException;
 
 public class DatabaseConnectionImpl implements DatabaseConnection{
     private final String url;
-    private final Logger logger;
-    public DatabaseConnectionImpl(Logger logger) {
+    public DatabaseConnectionImpl() {
         this.url = System.getenv("DATABASE_URL");
-        this.logger = logger;
     }
 
     @Override
@@ -20,7 +18,7 @@ public class DatabaseConnectionImpl implements DatabaseConnection{
         try{
             connection = DriverManager.getConnection(url);
         } catch (SQLException e){
-            logger.logError(e.getMessage());
+            System.out.println(e.getMessage());
         }
         return connection;
     }

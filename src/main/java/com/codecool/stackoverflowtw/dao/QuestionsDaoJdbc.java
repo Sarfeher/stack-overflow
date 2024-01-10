@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.dao;
 
+import com.codecool.stackoverflowtw.connection.DatabaseConnection;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
@@ -9,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class QuestionsDaoJdbc implements QuestionsDAO {
-    private final Connection connection;
+    private final DatabaseConnection connection;
     private final Logger logger;
 
-    public QuestionsDaoJdbc(Connection connection, Logger logger) {
+    public QuestionsDaoJdbc(DatabaseConnection connection, Logger logger) {
         this.connection = connection;
         this.logger = logger;
     }
@@ -27,7 +28,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public Question get(int id) {
         String sqlQuery = "SELECT * FROM questions INNER JOIN users ON questions.user_id = users.user_id WHERE question_id = ?;";
         try{
-            PreparedStatement statement = connection.prepareStatement(sqlQuery);
+            PreparedStatement statement = connection.getConnection().prepareStatement(sqlQuery);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             Question selectedQuestion = null;
@@ -51,7 +52,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public List<Question> getAll() {
         String sqlQuery = "SELECT * FROM questions;";
         try{
-            Statement statement = connection.createStatement();
+            Statement statement = connection.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             List<Question> allQuestions = new ArrayList<>();
 
@@ -76,7 +77,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public boolean save(Question question) {
         String sqlQuery = "INSERT INTO questions VALUES (?, ?, ?, ?);";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(sqlQuery);
             preparedStatement.setInt(1, question.getId());
             preparedStatement.setString(2, question.getQuestion());
             preparedStatement.setString(3, question.getTitle());
@@ -96,7 +97,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public boolean update(Question question, int id) {
         String sqlQuery = "UPDATE questions SET question = ?, title = ? WHERE question_id=?;";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(sqlQuery);
             preparedStatement.setString(1, question.getQuestion());
             preparedStatement.setString(2, question.getTitle());
             preparedStatement.setInt(3, id);
@@ -114,7 +115,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     public boolean delete(int id) {
         String sqlQuery = "DELETE FROM questions WHERE question_id=?;";
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
+            PreparedStatement preparedStatement = connection.getConnection().prepareStatement(sqlQuery);
             preparedStatement.setInt(1, id);
 
             preparedStatement.executeUpdate();

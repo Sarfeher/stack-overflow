@@ -1,5 +1,6 @@
 package com.codecool.stackoverflowtw.dao;
 
+import com.codecool.stackoverflowtw.connection.DatabaseConnection;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.dao.model.User;
 import com.codecool.stackoverflowtw.logger.Logger;
@@ -9,10 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UsersDaoJdbc implements UsersDAO{
-    private final Connection connection;
+    private final DatabaseConnection connection;
     private final Logger logger;
 
-    public UsersDaoJdbc(Connection connection, Logger logger) {
+    public UsersDaoJdbc(DatabaseConnection connection, Logger logger) {
         this.connection = connection;
         this.logger = logger;
     }
@@ -21,7 +22,7 @@ public class UsersDaoJdbc implements UsersDAO{
     public User get(int id) {
         String sqlQuery = "SELECT * FROM users WHERE user_id = ?;";
         try{
-            PreparedStatement statement = connection.prepareStatement(sqlQuery);
+            PreparedStatement statement = connection.getConnection().prepareStatement(sqlQuery);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             User selectedUser = null;
@@ -43,7 +44,7 @@ public class UsersDaoJdbc implements UsersDAO{
         List<User> users = new ArrayList<>();
         String sqlQuery = "SELECT * FROM users";
         try{
-            Statement statement = connection.createStatement();
+            Statement statement = connection.getConnection().createStatement();
             ResultSet resultSet = statement.executeQuery(sqlQuery);
             while (resultSet.next()){
                 int userId =  resultSet.getInt("user_id");
