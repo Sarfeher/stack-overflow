@@ -28,7 +28,8 @@ public class QuestionService {
     public QuestionDTO getQuestionById(int id) {
         // TODO
         questionsDAO.sayHi();
-        return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
+       // return new QuestionDTO(id, "example title", "example desc", LocalDateTime.now());
+        return questionsDAO.get(id);
     }
 
     public boolean deleteQuestionById(int id) {
