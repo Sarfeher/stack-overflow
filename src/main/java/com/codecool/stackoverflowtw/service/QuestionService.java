@@ -21,7 +21,8 @@ public class QuestionService {
 
     public List<QuestionDTO> getAllQuestions() {
         // TODO
-        return List.of(new QuestionDTO(1, "example title", "example desc", LocalDateTime.now()));
+        return questionsDAO.getAll();
+        //return List.of(new QuestionDTO(1, "example title", "example desc", LocalDateTime.now()));
     }
 
     public QuestionDTO getQuestionById(int id) {
