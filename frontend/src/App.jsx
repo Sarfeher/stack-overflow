@@ -1,13 +1,16 @@
 import { useEffect, useState } from 'react'
 import './App.css'
+import { Link } from 'react-router-dom';
 
 function App() {
+  const [questions, setQuestion] = useState([]);
+
 
   useEffect(() => {
     const fetchData = async () => {
         const response = await fetch("/api/questions/all");
         const data = await response.json();
-        console.log(data);
+        setQuestion(data);
     }
 
     fetchData();
@@ -15,7 +18,8 @@ function App() {
 
   return (
     <>
-      Hello asd
+      {questions.map(question => <Link to={"/test"} key={question.id}> <div className='question'> <h2> {question.description
+} </h2> <span> Asked by {question.questionUserName} </span> </div> </Link>)}
     </>
   )
 }
