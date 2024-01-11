@@ -18,7 +18,7 @@ function App() {
 
   return (
     <>
-      {questions.map(question => <Link to={"/test"} key={question.id}> <div className='question'> <h2> {question.description
+      {questions.map(question => <Link to={"/question/" + question.id} key={question.id}> <div className='question'> <h2> {question.description
 } </h2> <span> Asked by {question.questionUserName} </span> </div> </Link>)}
     </>
   )
