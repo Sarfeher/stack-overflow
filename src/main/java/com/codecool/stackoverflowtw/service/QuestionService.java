@@ -3,6 +3,7 @@ package com.codecool.stackoverflowtw.service;
 import com.codecool.stackoverflowtw.dao.QuestionsDAO;
 import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
+import com.codecool.stackoverflowtw.dao.model.Question;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -37,7 +38,7 @@ public class QuestionService {
         return questionsDAO.delete(id);
     }
 
-    public int addNewQuestion(NewQuestionDTO question) {
+    public int addNewQuestion(Question question) {
         // TODO
         int createdId = 0;
         questionsDAO.save(question);
