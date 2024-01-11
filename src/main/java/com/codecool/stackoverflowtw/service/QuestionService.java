@@ -38,7 +38,7 @@ public class QuestionService {
         return questionsDAO.delete(id);
     }
 
-    public int addNewQuestion(Question question) {
+    public int addNewQuestion(NewQuestionDTO question) {
         // TODO
         int createdId = 0;
         questionsDAO.save(question);
