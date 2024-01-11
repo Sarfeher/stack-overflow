@@ -2,6 +2,8 @@ package com.codecool.stackoverflowtw;
 
 import com.codecool.stackoverflowtw.connection.DatabaseConnection;
 import com.codecool.stackoverflowtw.connection.DatabaseConnectionImpl;
+import com.codecool.stackoverflowtw.dao.AnswerDAO;
+import com.codecool.stackoverflowtw.dao.AnswerDAOJdbc;
 import com.codecool.stackoverflowtw.dao.QuestionsDAO;
 import com.codecool.stackoverflowtw.dao.QuestionsDaoJdbc;
 import com.codecool.stackoverflowtw.logger.Logger;
@@ -33,5 +35,8 @@ public class StackoverflowTwApplication {
     @Bean
     public QuestionsDAO questionsDAO(DatabaseConnection connection, Logger logger) {
         return new QuestionsDaoJdbc(connection, logger);
+    }  @Bean
+    public AnswerDAO answerDAO(DatabaseConnection connection, Logger logger) {
+        return new AnswerDAOJdbc(connection, logger);
     }
 }
