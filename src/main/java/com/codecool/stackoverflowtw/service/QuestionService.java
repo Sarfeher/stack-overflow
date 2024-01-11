@@ -34,12 +34,17 @@ public class QuestionService {
 
     public boolean deleteQuestionById(int id) {
         // TODO
-        return false;
+        return questionsDAO.delete(id);
     }
 
     public int addNewQuestion(NewQuestionDTO question) {
         // TODO
         int createdId = 0;
+        questionsDAO.save(question);
         return createdId;
+    }
+
+    public List<QuestionDTO> getQuestionByUserName(String userName){
+        return questionsDAO.getByName(userName);
     }
 }
