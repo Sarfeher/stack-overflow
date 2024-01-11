@@ -42,6 +42,10 @@ public class QuestionService {
         // TODO
         int createdId = 0;
         questionsDAO.save(question);
-        return question.getId();
+        return createdId;
+    }
+
+    public List<QuestionDTO> getQuestionByUserName(String userName){
+        return questionsDAO.getByName(userName);
     }
 }

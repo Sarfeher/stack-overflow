@@ -29,14 +29,15 @@ public class QuestionController {
         return questionService.getQuestionById(id) ;
     }
   @GetMapping("/name/{name}")
-    public String getQuestionByName(@PathVariable String name) {
-        return "alma/" + name;
+    public List<QuestionDTO> getQuestionByName(@PathVariable String name) {
+        return questionService.getQuestionByUserName(name);
     }
 
     @PostMapping("/")
-    public int addNewQuestion(@RequestBody Question question) {
-        questionService.addNewQuestion(question);
-        return 0;
+
+    public int addNewQuestion(@RequestBody NewQuestionDTO question) {
+        return questionService.addNewQuestion(question);
+
     }
 
     @DeleteMapping("/{id}")

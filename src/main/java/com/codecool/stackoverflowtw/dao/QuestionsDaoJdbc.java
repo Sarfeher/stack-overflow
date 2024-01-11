@@ -1,6 +1,7 @@
 package com.codecool.stackoverflowtw.dao;
 
 import com.codecool.stackoverflowtw.connection.DatabaseConnection;
+import com.codecool.stackoverflowtw.controller.dto.NewQuestionDTO;
 import com.codecool.stackoverflowtw.controller.dto.QuestionDTO;
 import com.codecool.stackoverflowtw.dao.model.Question;
 import com.codecool.stackoverflowtw.dao.model.User;
@@ -28,21 +29,21 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
     @Override
     public QuestionDTO get(int id) {
-        String sqlQuery = "SELECT * FROM questions INNER JOIN users ON questions.user_id = users.user_id WHERE question_id = ?;";
+        String sqlQuery = "SELECT * FROM questions WHERE question_id = ?;";
         try{
             PreparedStatement statement = connection.getConnection().prepareStatement(sqlQuery);
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             QuestionDTO selectedQuestion = null;
             while (resultSet.next()){
-                int userId =  resultSet.getInt("user_id");
                 int questionId = resultSet.getInt("question_id");
-                String question = resultSet.getString("question");
+                String question = resultSet.getString("description");
                 String title = resultSet.getString("title");
                 LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
+                String questionUserName = resultSet.getString("question_user_name");
 
 
-                selectedQuestion = new QuestionDTO(questionId,title,question, date);
+                selectedQuestion = new QuestionDTO(questionId,title,question, date, questionUserName);
             }
             return selectedQuestion;
         } catch (SQLException e){
@@ -60,13 +61,14 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
             List<QuestionDTO> allQuestions = new ArrayList<>();
 
             while (resultSet.next()){
-                int userId =  resultSet.getInt("user_id");
                 int questionId = resultSet.getInt("question_id");
-                String question = resultSet.getString("question");
+                String question = resultSet.getString("description");
                 String title = resultSet.getString("title");
                 LocalDateTime date = resultSet.getTimestamp("date").toLocalDateTime();
+                String questionUser = resultSet.getString("question_user_name");
 
-                QuestionDTO selectedQuestion = new QuestionDTO(questionId, title, question, date);
+
+                QuestionDTO selectedQuestion = new QuestionDTO(questionId, title, question, date, questionUser);
                 allQuestions.add(selectedQuestion);
 
             }
@@ -78,15 +80,15 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
     }
 
     @Override
-    public boolean save(Question question) {
-        String sqlQuery = "INSERT INTO questions VALUES (?, ?, ?, ?, ?);";
+    public boolean save(NewQuestionDTO newQuestionDTO) {
+        String sqlQuery = "INSERT INTO questions (title, description, question_user_name, date) VALUES (?, ?, ?, ?);";
         try {
             PreparedStatement preparedStatement = connection.getConnection().prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, question.getId());
-            preparedStatement.setString(2, question.getQuestion());
-            preparedStatement.setString(3, question.getTitle());
-            preparedStatement.setInt(4, question.getUserId());
-            preparedStatement.setTimestamp(5, Timestamp.valueOf(LocalDateTime.now()));
+            preparedStatement.setString(1, newQuestionDTO.title());
+            preparedStatement.setString(2, newQuestionDTO.description());
+            preparedStatement.setString(3, newQuestionDTO.questionUserName());
+            System.out.println(newQuestionDTO.questionUserName());
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
 
             preparedStatement.executeQuery();
 
@@ -119,7 +121,7 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
     @Override
     public boolean delete(int id) {
-        String sqlQuery = "DELETE FROM questions WHERE question_id=?;";
+        String sqlQuery = "DELETE FROM questions WHERE question_id = ?;";
         try {
             PreparedStatement preparedStatement = connection.getConnection().prepareStatement(sqlQuery);
             preparedStatement.setInt(1, id);
@@ -132,5 +134,32 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
 
             return false;
         }
+    }
+
+    @Override
+    public List<QuestionDTO> getByName(String userName) {
+        String sqlQuery = "SELECT * FROM questions WHERE question_user_name = ?;";
+        List<QuestionDTO> questions = new ArrayList<>();
+        try{
+            PreparedStatement statement = connection.getConnection().prepareStatement(sqlQuery);
+            statement.setString(1, userName);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                String title = resultSet.getString("title");
+                String description = resultSet.getString("description");
+                String questionUserName = resultSet.getString("question_user_name");
+                LocalDateTime postDate = resultSet.getTimestamp("date").toLocalDateTime();
+                int questionId = resultSet.getInt("question_id");
+
+                QuestionDTO question = new QuestionDTO(questionId, title,description, postDate, questionUserName);
+                questions.add(question);
+            }
+
+        } catch (SQLException e){
+            logger.logError(e.getMessage());
+        }
+
+        return questions;
     }
 }
