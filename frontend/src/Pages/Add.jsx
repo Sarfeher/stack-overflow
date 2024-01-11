@@ -33,16 +33,16 @@ function Add() {
   return (
     <>
       <form onSubmit={submit}>
-        <label>Question:
-        <input required value={question} onChange={e => setQuestion(e.target.value)}></input>
-        </label>
         <label>Title:
             <input required value={title} onChange={e => setTitle(e.target.value)}></input>
+        </label>
+        <label>Question:
+            <textarea required rows="5" cols="33" value={question} onChange={e => setQuestion(e.target.value)}> </textarea>
         </label>
         <label>Name:
             <input required value={name} onChange={e => setName(e.target.value)}></input>
         </label>
-        <button>Submit</button>
+        <button type='submit'>Submit</button>
       </form>
     </>
   )

@@ -28,6 +28,7 @@ public class AnswerController {
 
     @PostMapping("/")
     public int addNewAnswer(@RequestBody AnswerDTO answer) {
+        System.out.println(answer);
         return answerService.addNewAnswer(answer);
 
     }

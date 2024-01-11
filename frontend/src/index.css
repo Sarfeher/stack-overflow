@@ -9,32 +9,34 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: rgb(255, 255, 255);
+  background-color: #f7f7f7; /* Light gray background */
 }
 
 button {
-  padding: 0.2rem 1rem;
-  margin: 0.1rem;
+  padding: 0.5rem 1.5rem; /* Increased padding */
+  margin: 0.2rem;
   font-weight: bold;
-  color: black;
+  color: white; /* Changed text color to white */
   text-transform: uppercase;
-  outline: rgb(252, 131, 17);
-  border-radius: 4px;
+  outline: none; /* Removed outline */
+  border-radius: 5px;
   cursor: pointer;
-  background-color: white;
+  background-color: #333; /* Dark gray background */
+  border: 2px solid #333; /* Matching border color */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
 
 button:hover {
-  border-color: rgb(252, 131, 17);
+  background-color: #555; /* Darker gray on hover */
 }
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: #333; /* Dark gray link color */
 }
 
 .EmployeeTable {
-  padding: 0.5rem;
+  padding: 1rem;
 }
 
 table {
@@ -44,58 +46,61 @@ table {
 }
 
 table tbody tr {
-  background-color: rgb(198, 218, 255);
+  background-color: #ecf0f1; /* Lighter background color */
 }
 
 table tbody tr:nth-child(even) {
-  background-color: rgb(219, 230, 255);
+  background-color: #d5e8ed; /* Light blue background for even rows */
 }
 
 table td,
 table th {
-  padding: 0.2rem;
+  padding: 0.5rem;
 }
 
 table button {
-  padding: 0.2rem 1rem;
-  margin: 0.1rem;
+  padding: 0.5rem 1.5rem; /* Adjusted button padding */
+  margin: 0.2rem;
 }
 
 form {
   display: grid;
-  font-size: 1.2rem;
+  font-size: 1.4rem; /* Slightly increased font size */
+}
+
+.answers {
+  border-bottom:1px solid #333;
+  list-style: none;
+}
+
+.answerList {
+  margin-top: 70px;
 }
 
 .control {
   width: 100%;
-  padding: 1rem;
+  padding: 1.5rem; /* Increased padding */
   display: grid;
-  gap: 0.2rem;
+  gap: 0.5rem;
 }
 
 .buttons {
-  font-size: 1.2rem;
-  padding: 1rem;
+  font-size: 1.4rem; /* Slightly increased font size */
+  padding: 1.5rem; /* Increased padding */
 }
 
 .control input,
 .control select {
-  font-size: 1.2rem;
-  padding: 0.2rem;
+  font-size: 1.4rem; /* Slightly increased font size */
+  padding: 0.7rem; /* Adjusted input padding */
 }
 
 .control .checkbox,
 .control .radio {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.7rem; /* Increased gap */
   align-items: center;
-  padding: 0.2rem;
-  cursor: pointer;
-}
-
-button {
-  padding: 0.7rem 1.7rem;
-  margin-right: 1rem;
+  padding: 0.5rem;
 }
 
 .grow {
