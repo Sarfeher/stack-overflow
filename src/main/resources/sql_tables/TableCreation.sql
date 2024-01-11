@@ -10,5 +10,6 @@ CREATE TABLE questions (
 
 CREATE TABLE answers (
     question_id INTEGER NOT NULL,
-    answer TEXT NOT NULL, user_name VARCHAR(480)
+    answer TEXT NOT NULL,
+    user_name VARCHAR(480)
 );

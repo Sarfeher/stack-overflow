@@ -86,8 +86,8 @@ public class QuestionsDaoJdbc implements QuestionsDAO {
             PreparedStatement preparedStatement = connection.getConnection().prepareStatement(sqlQuery);
             preparedStatement.setString(1, newQuestionDTO.title());
             preparedStatement.setString(2, newQuestionDTO.description());
-            preparedStatement.setString(3, newQuestionDTO.questionUserName());
-            System.out.println(newQuestionDTO.questionUserName());
+            preparedStatement.setString(3, newQuestionDTO.userName());
+            System.out.println(newQuestionDTO.userName());
             preparedStatement.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
 
             preparedStatement.executeQuery();

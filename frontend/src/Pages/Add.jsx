@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-function saveQuestion(title, description, question_user_name) {
+function saveQuestion(title, description, userName) {
 
-    const questionObject = {title, description, question_user_name};
+    const questionObject = {title, description, userName};
     
     fetch("/api/questions/", {
         method: "POST",
